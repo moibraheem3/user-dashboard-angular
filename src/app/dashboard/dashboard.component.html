@@ -1,0 +1,101 @@
+<div class="max-w-screen-xl mx-auto p-4">
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+    @for (user of users; track user.id) {
+      <div
+        class="h-auto max-w-full bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg"
+      >
+        <div class="flex flex-col items-center py-10">
+          <img
+            class="w-24 h-24 mb-3 rounded-full shadow-lg"
+            [src]="user.avatar"
+            alt="Bonnie image"
+            [alt]="user.first_name + ' ' + user.last_name"
+          />
+          <h5 class="mb-1 text-xl font-medium text-gray-900">
+            {{ user.first_name + " " + user.last_name }}
+          </h5>
+          <span class="text-sm text-gray-500">{{ user.email }}</span>
+          <div class="flex mt-4 md:mt-6">
+            <a
+              [routerLink]="['/user', user.id]"
+              class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
+              >Details</a
+            >
+          </div>
+        </div>
+      </div>
+    } @empty {
+      @for (p of placeholder; track $index) {
+        <div class="max-w-sm animate-pulse">
+          <div
+            class="h-auto max-w-full bg-gray-50 border border-gray-200 rounded-lg"
+          >
+            <div class="flex flex-col items-center py-10">
+              <div class="w-24 h-24 mb-3 rounded-full bg-gray-200"></div>
+              <div class="h-2.5 bg-gray-200 rounded-full w-48 mb-2"></div>
+              <div class="h-2 bg-gray-200 rounded-full w-32"></div>
+            </div>
+          </div>
+          <span class="sr-only">Loading...</span>
+        </div>
+      }
+    }
+  </div>
+
+  <div class="flex flex-col items-center pt-10">
+    <!-- Help text -->
+    <span class="text-sm text-gray-700">
+      Showing
+      <span class="font-semibold text-gray-900">{{ per_page }}</span> of
+      <span class="font-semibold text-gray-900">{{ total }}</span>
+      Entries
+    </span>
+    <div class="inline-flex mt-2 xs:mt-0">
+      <!-- Buttons -->
+      <button
+        class="flex items-center justify-center px-3 h-8 text-sm font-medium text-gray-900 bg-white rounded-bl rounded-tl border hover:shadow disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
+        [disabled]="page === 1"
+        (click)="prev()"
+      >
+        <svg
+          class="w-3.5 h-3.5 me-2 rtl:rotate-180"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 14 10"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 5H1m0 0 4 4M1 5l4-4"
+          />
+        </svg>
+        Prev
+      </button>
+      <button
+        class="flex items-center justify-center px-3 h-8 text-sm font-medium text-gray-900 bg-white rounded-br rounded-tr border hover:shadow disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
+        [disabled]="page === total_pages"
+        (click)="next()"
+      >
+        Next
+        <svg
+          class="w-3.5 h-3.5 ms-2 rtl:rotate-180"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 14 10"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M1 5h12m0 0L9 1m4 4L9 9"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
